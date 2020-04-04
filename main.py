@@ -15,10 +15,15 @@ import shutil
 import sys
 import random
 import csv
+import cv2
 
 # CLASS DEFINITIONS-----------------------------------------------------------------------------------------------------
+class myVideo(object):
+
+    def __init__(self, file):
+        self.file = file
+
 # todo classes:
-#  video
 #  image
 #  loadedCSV
 #  heatmap
@@ -26,11 +31,42 @@ import csv
 
 # MAIN FUNCTION---------------------------------------------------------------------------------------------------------
 def main():
+    video = myVideo(selectVideo)
+    print("file: " + str(video.file))
+
+    parseVideo(video)
 
 
 # BODY FUNCTIONS--------------------------------------------------------------------------------------------------------
+
+# select video file from directory
+def selectVideo():
+    Tk().withdraw()
+    filename = askopenfilename()
+
+    return filename
+
+# parses the video into individual frames as images
+def parseVideo(video):
+    # todo:
+    #  create dynamic directory for images to save into
+    #  make video link dynamic
+
+    vid = cv2.VideoCapture("testVid.mp4")
+    success, image = vid.read()
+    count = 0
+    while success:
+        # saves every 5th frame of the video
+        if count % 5 == 0:
+            cv2.imwrite("testVid/" + "frame%d.jpg" % count, image)
+        success, image = vid.read()
+        count += 1
+
+    print("Video parsed")
+
+    return
+
 # todo functions:
-#  select video file
 #  parse video to images
 #  send image to API
 #  save data to CSV
