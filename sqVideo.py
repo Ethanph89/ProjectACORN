@@ -1,4 +1,9 @@
 # IMPORTS---------------------------------------------------------------------------------------------------------------
+import PIL.Image
+from PIL import Image, ImageFilter, ImageShow
+import PIL.Image
+import numpy as np
+import boto3
 import os.path
 from os import path
 from tkinter.filedialog import askopenfilename
@@ -14,6 +19,11 @@ class myVideo(object):
         self.path = self.fullpath.replace(self.file, '')
         self.name = self.file.replace('.mp4', '')
 
+class myImage(object):
+
+    def __init__(self, fullpath):
+        self.fullpath = fullpath
+
 
 # BODY FUNCTIONS--------------------------------------------------------------------------------------------------------
 
@@ -23,6 +33,7 @@ def selectVideo():
     filename = askopenfilename()
 
     return filename
+
 
 # parses the video into individual frames as images
 def parseVideo(video):
@@ -49,4 +60,28 @@ def parseVideo(video):
 
     print("Video parsed")
 
-    return
+    return folderpath
+
+
+#   opens JPG and returns RGB pixel array
+def openJPG(path):
+    im = PIL.Image.open(path)
+    pixel_array = np.array(im)
+
+    return pixel_array
+
+
+#   sends image to rekognition client
+def rekognitionRequest(path):
+    client = boto3.client('rekognition')
+
+    image = open(path, "rb")
+
+    response = client.detect_faces(
+        Image={'Bytes': image.read()},
+        Attributes=['DEFAULT']
+    )
+
+    image.close()
+
+    return response
