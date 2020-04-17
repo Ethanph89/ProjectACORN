@@ -1,11 +1,6 @@
 # IMPORTS---------------------------------------------------------------------------------------------------------------
 import json
 from os import rename, remove
-import PIL.Image
-from PIL import Image, ImageFilter, ImageShow
-import PIL.Image
-import numpy as np
-import boto3
 import tkinter as tk
 from pathlib import Path
 import shutil
@@ -19,19 +14,41 @@ import sqTimeline
 # CLASS DEFINITIONS-----------------------------------------------------------------------------------------------------
 
 # todo classes:
-#  image
 #  loadedCSV
 #  heatmap
 #  timeline
 
 # MAIN FUNCTION---------------------------------------------------------------------------------------------------------
 def main():
-    # select video for use
+    # select video for use and initialize video object
     video = sqVideo.myVideo(sqVideo.selectVideo())
     print("file: " + str(video.fullpath))
 
     # parse video into images in a folder
-    sqVideo.parseVideo(video)
+    folderpath = sqVideo.parseVideo(video)
+
+    # create CSV for saving data
+    f = open(str(folderpath) + "data.csv", "w")
+    f.write('image,' + 'x,' + 'y,' + 'time' '\n')
+    f.close()
+
+    # find all parsed images
+    pathlist = sorted(Path(folderpath).glob('**/*.jpg'))
+
+    # iterate through each image
+    for path in pathlist:
+        jpgPath = str(path)
+        print("jpgPath: " + str(jpgPath))
+
+        # initializes the image object
+        image = sqVideo.myImage(jpgPath)
+
+        # if image has features, collects and stores data
+        if image.featuresJSON != 0:
+
+            # save data to CSV
+            sqVideo.saveData(folderpath, image)
+
 
 
 # BODY FUNCTIONS--------------------------------------------------------------------------------------------------------
