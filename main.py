@@ -27,8 +27,13 @@ def main():
     # parse video into images in a folder
     folderpath = sqVideo.parseVideo(video)
 
+    # create CSV for saving data
+    f = open(str(folderpath) + "data.csv", "w")
+    f.write('image,' + 'x,' + 'y,' + 'time' '\n')
+    f.close()
+
     # find all parsed images
-    pathlist = Path(folderpath).glob('**/*.jpg')
+    pathlist = sorted(Path(folderpath).glob('**/*.jpg'))
 
     # iterate through each image
     for path in pathlist:
@@ -38,8 +43,12 @@ def main():
         # initializes the image object
         image = sqVideo.myImage(jpgPath)
 
-        # create an array of the image pixels
-        pixelArray = sqVideo.openJPG(jpgPath)
+        # if image has features, collects and stores data
+        if image.featuresJSON != 0:
+
+            # save data to CSV
+            sqVideo.saveData(folderpath, image)
+
 
 
 # BODY FUNCTIONS--------------------------------------------------------------------------------------------------------
