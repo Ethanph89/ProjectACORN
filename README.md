@@ -1,7 +1,7 @@
 # Project A.C.O.R.N
 Project ACORN (Analyzing Complex Organic Rhythm in Nature)
 
-## About Project Acorn ![Acorn image here plase][acorn.png]
+## About Project Acorn ![Acorn image here plase](https://github.com/Ethanph89/ProjectACORN/blob/featureTimeline/assets/acorn.png width="25" height="25")
 
 ## Background
 The California ground squirrel (CGS) is a native Californian species ranging from Baja California to Washington. 
@@ -15,7 +15,7 @@ A.C.O.R.N. is a Python-based software application that parses videos and obtains
 This software will take user input by allowing for the input of an .mp4 file to be processed by the AWS Rekognition API (Amazon Web Service), where the video is parse into a frame per second for the entirety of the video. Once parsed, data will be collected and saved in a .csv file. The .csv file will be sent to two python scripts, respectively, turning the raw data into a timeline in the form of a scatterplot and a heatmap. Data visualization is key for this project, and so the software will display saved images after plot generation has completed.  
 
 ## Early Renders
-![TimelineImage][assets/data.png]
+![TimelineImage](https://github.com/Ethanph89/ProjectACORN/blob/featureTimeline/assets/data.png width="350" height="200")
 
 ## Authors
 * **Andrew Bhatti, Giancarlo Garcia Deleon, Ethan Hunt, Cassandra Olivas**
