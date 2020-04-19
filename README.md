@@ -1,7 +1,7 @@
 # Project A.C.O.R.N
 Project ACORN (Analyzing Complex Organic Rhythm in Nature)
 
-## About Project Acorn <img src="https://github.com/Ethanph89/ProjectACORN/blob/featureTimeline/assets/acorn.png" width="80" height="50">
+## About Project Acorn <img src="https://github.com/Ethanph89/ProjectACORN/blob/featureTimeline/assets/acorn.png" width="85" height="50">
 
 ## Background
 The California ground squirrel (CGS) is a native Californian species ranging from Baja California to Washington. 
