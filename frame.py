@@ -10,7 +10,7 @@ import sys
 
 # Initialization
 gui = draw.Tk()
-gui.iconphoto(False, draw.PhotoImage(file="bin/ico_acorn.png"))
+gui.iconphoto(False, draw.PhotoImage(file="assets/ico_acorn.png"))
 gui.geometry("800x600")
 gui.title("A.C.O.R.N.")
 
@@ -18,10 +18,10 @@ gui.title("A.C.O.R.N.")
 cleanFont = font.Font(family='Helvetica', size=12)
 
 # GRAPHICS
-img = Image.open("bin/bg_button_rect_red.png")
+img = Image.open("assets/bg_button_rect_red.png")
 img = img.resize((round(278 * 0.55), round(61 * 0.55)), Image.ANTIALIAS)
 fit = ImageTk.PhotoImage(img)  # resized and formatted graphic
-holder = Image.open("bin/acorn_main.png")
+holder = Image.open("assets/acorn_main.png")
 holder = ImageTk.PhotoImage(holder)
 
 
