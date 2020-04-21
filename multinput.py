@@ -25,7 +25,6 @@ x = filebrowser(".csv")
 # print(x[1])
 # for elem in x:
 
-input("Press Enter to continue...")
 for elem in x:
     df = pd.read_csv(elem, delimiter=',', header=1)
     print("NEW CSV FILE DETECTED NAMED:", elem)
