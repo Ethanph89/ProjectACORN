@@ -3,6 +3,7 @@ import json
 from os import rename, remove
 import tkinter as tk
 from pathlib import Path
+import os.path
 import shutil
 import sys
 import random
@@ -10,6 +11,8 @@ import csv
 import sqVideo
 import sqHeatmap
 import sqTimeline
+import sys
+print(sys.version_info)
 
 # CLASS DEFINITIONS-----------------------------------------------------------------------------------------------------
 

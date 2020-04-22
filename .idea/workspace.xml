@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97438b09-a988-4950-a40f-42aab5f6271f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/acorn_main.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/bg_button_rect_red.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/ico_acorn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frame.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/multinput.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,18 +27,43 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1a2xVvdkEJLVGE37uq50vgImib4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.frame">
+    <configuration name="frame" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ProjectACORN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/frame.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="ProjectACORN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -40,9 +71,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\Gian De\AppData\Local\Programs\Python\Python38\python.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -54,6 +85,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="multinput" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ProjectACORN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/multinput.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.frame" />
+      <item itemvalue="Python.multinput" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.frame" />
+        <item itemvalue="Python.multinput" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -68,40 +131,44 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="245" y="78" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586045721249">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587547850208">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="245" y="78" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586045721249" />
-    <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1585948677084" />
+    <state x="184" y="83" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.797@0.23.1440.797" timestamp="1587547850208" />
     <state x="612" y="298" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586045889195">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="612" y="298" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1586045889195" />
-    <state width="1362" height="266" key="GridCell.Tab.0.bottom" timestamp="1586045923154">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="204" key="GridCell.Tab.0.bottom" timestamp="1587549948093">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1362" height="266" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586045923154" />
-    <state width="1419" height="204" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1585950158184" />
-    <state width="1362" height="266" key="GridCell.Tab.0.center" timestamp="1586045923154">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="204" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1587549948093" />
+    <state width="1419" height="204" key="GridCell.Tab.0.center" timestamp="1587549948092">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1362" height="266" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586045923154" />
-    <state width="1419" height="204" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1585950158183" />
-    <state width="1362" height="266" key="GridCell.Tab.0.left" timestamp="1586045923154">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="204" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1587549948092" />
+    <state width="1419" height="204" key="GridCell.Tab.0.left" timestamp="1587549948090">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1362" height="266" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586045923154" />
-    <state width="1419" height="204" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1585950158183" />
-    <state width="1362" height="266" key="GridCell.Tab.0.right" timestamp="1586045923154">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="204" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1587549948090" />
+    <state width="1419" height="204" key="GridCell.Tab.0.right" timestamp="1587549948092">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state width="1362" height="266" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586045923154" />
-    <state width="1419" height="204" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1585950158184" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1586043106373">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="204" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1587549948092" />
+    <state x="346" y="98" key="SettingsEditor" timestamp="1587547923361">
+      <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586043106373" />
+    <state x="346" y="98" key="SettingsEditor/0.23.1440.797@0.23.1440.797" timestamp="1587547923361" />
     <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1586045654333">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
