@@ -5,9 +5,6 @@ from PIL import Image, ImageTk
 import time
 import os
 import sys
-import pandas as pd
-
-pd.read_csv('data.csv', delimiter=',', header=1)
 
 # Initialization ===================================================
 gui = draw.Tk()
