@@ -3,7 +3,7 @@ Project ACORN (Analyzing Complex Organic Rhythm in Nature)
 
 It's a catchy name so we ran away with it. 
 
-## About Project Acorn <img src="https://github.com/Ethanph89/ProjectACORN/blob/featureTimeline/assets/acorn.png" width="50" height="50">
+## About Project Acorn <img src="https://github.com/Ethanph89/ProjectACORN/blob/master/assets/acorn_main.png" width="50" height="50">
 Quantify animal behavior by tracking animal movement and time spent at select variables.
 
 ## Background
