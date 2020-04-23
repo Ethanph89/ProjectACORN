@@ -1,3 +1,5 @@
+# AUTHOR:
+# Giancarlo Garcia Deleon
 # IMPORTS---------------------------------------------------------------------------------------------------------------
 import glob
 from matplotlib import pyplot

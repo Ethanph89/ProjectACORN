@@ -1,3 +1,5 @@
+# AUTHOR:
+# Ethan Hunt
 # IMPORTS---------------------------------------------------------------------------------------------------------------
 import PIL.Image
 from PIL import Image, ImageFilter, ImageShow
