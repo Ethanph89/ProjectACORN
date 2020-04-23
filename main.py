@@ -210,7 +210,7 @@ def uploadVideo():
     folderpath = sqVideo.parseVideo(video)
 
     # create CSV for saving data
-    f = open(str(folderpath) + "data.csv", "w")
+    f = open("data.csv", "w")
     f.write('image,' + 'x,' + 'y,' + 'time' '\n')
     f.close()
 
@@ -234,8 +234,6 @@ def uploadVideo():
 
 # todo functions:
 #  select graph
-#  generate graph
-#  display graph
 #  import CSV
 
 # RUN MAIN--------------------------------------------------------------------------------------------------------------
