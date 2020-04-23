@@ -70,7 +70,7 @@ def operation(self):
         text.configure(text=event)
         package()
         print(event)  # debugging
-        os.system('python main.py')
+        os.system('python3 main.py')
 
     elif self == 'use':  # USE FILE OPTION
         event = "Please select a .csv file."
@@ -84,7 +84,7 @@ def operation(self):
         text.configure(text=event)
         package()
         print(event)  # debugging
-        os.system('python multinput.py')
+        os.system('python3 multinput.py')
         artshow()  # hang that art on the wall
 
     else:  # what did you break
@@ -104,8 +104,7 @@ def artshow():
             art.update()
             text.configure(text=":D")
             package()
-        else:
-            print("ERROR: No images exist.")
+        # ADD SHIT TO A LIST FOR MULT IMG STORAGE
 
 
 def patchwork(file):
@@ -153,7 +152,7 @@ generate = Button(interface,
                   bg="#78909c",
                   activebackground="#78909c",
                   command=lambda: operation("graph"))
-generate.pack(pady=15)
+generate.pack(pady=15)  # SET DISABLED STATE
 
 # INFORMATION DISPLAY ==============================================
 messages = LabelFrame(interface,

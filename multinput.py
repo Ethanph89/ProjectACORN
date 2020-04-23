@@ -18,11 +18,22 @@ import os
 #     print("Directory to save new scatterplots already exists.\n")
 
 print("NOW GENERATING SCATTERPLOTS")
-def filebrowser(ext=""):
-    "Returns files with an extension"
-    return [f for f in glob.glob(f"*{ext}")]
-x = filebrowser(".csv")
-# print(x[1])
+
+me = os.getcwd()
+print("location: " + me)
+
+
+def filebrowser(ext):
+    #  """Returns files with an extension"""
+    #  return [f for f in glob.glob(f"*{ext}")]
+    for file in os.listdir(os.getcwd()):
+        if file.endswith(ext):
+            x.append(file)
+
+
+x = []
+filebrowser(".csv")
+print(x)
 # for elem in x:
 
 for elem in x:
