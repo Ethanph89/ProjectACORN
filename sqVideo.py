@@ -1,3 +1,5 @@
+# AUTHOR:
+# Ethan Hunt
 # IMPORTS---------------------------------------------------------------------------------------------------------------
 import PIL.Image
 from PIL import Image, ImageFilter, ImageShow
@@ -148,6 +150,6 @@ def parseAWSOutput(self):
     return x, y, time
 
 def saveData(folder, image):
-    d = open(folder + "data.csv", "a")
+    d = open("data.csv", "a")
     d.write(str(image.fullpath[-14:]) + ',' + str(image.xCoord) + ',' + str(image.yCoord) + ',' + str(image.timestamp) + '\n')
     d.close()
