@@ -12,7 +12,7 @@ import shutil
 import sys
 import random
 import csv
-import main
+from main import handleVideo
 import sqVideo
 import sqHeatmap
 import sqTimeline
@@ -196,7 +196,7 @@ def operation(self):
         text.configure(text=event)
         package()
         print(event)  # debugging
-        main()
+        handleVideo()
 
     elif self == 'use':  # USE FILE OPTION
         event = "Please select a .csv file."
