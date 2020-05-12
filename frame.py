@@ -18,6 +18,7 @@ from sqTimelineSingle import generateTimelineOne
 import sqVideo
 import sqHeatmap
 from sqTimeline import generateTimeline
+from sqHeatmapSingle import generateHeatmap
 
 # INITIALIZATION------------------------------------------------------------------------------------------INITIALIZATION
 gui = draw.Tk()
@@ -57,6 +58,11 @@ display = Frame(gui,
                 bg="#a7c0cd",
                 relief="groove")  # RIGHT justify; contains images / graphs
 
+options = Frame(interface,
+                bd=1,
+                bg="#a7c0cd",
+                relief="groove")
+
 checkboxes = Frame(interface,
                    bd=1,
                    bg="#a7c0cd",
@@ -92,6 +98,9 @@ art = Label(display,
 # canvas.create_image(0, 0, anchor=draw.NW, image=bdSq)
 
 # BUTTONS--------------------------------------------------------------------------------------------------------BUTTONS
+optionVid = Radiobutton()
+
+
 uploadVideo = Button(interface,
                      image=btn,
                      highlightthickness=0,
@@ -236,7 +245,7 @@ def operation(self):
         print(event)  # debugging
         csvfile = askopenfilename()
         print(csvfile)
-        generateTimelineOne(csvfile)
+        generateHeatmap(csvfile)
         artshow()
 
     elif self == 'tline' or self == 'hmap':
@@ -294,13 +303,14 @@ headline.pack(fill='x', pady=15)            # headlining text
 ###### FRAME: INTERFACE ######
 interface.pack(side=LEFT, fill='x')
 
-checkboxes.pack(side=TOP, pady=(20, 10))    # contains checkboxes
-hotmap.pack(side=LEFT)                      # heatmap checkbox
-history.pack(side=LEFT)                     # timeline checkbox
+
 uploadVideo.pack(side=TOP, pady=(10, 15))   # upload video file button
 useFile.pack(side=TOP, pady=(0, 10))                      # upload csv file button
 filename.pack(padx=20, pady=10)             # displays csv files
 
+checkboxes.pack(side=TOP, pady=(20, 10))    # contains checkboxes
+hotmap.pack(side=LEFT)                      # heatmap checkbox
+history.pack(side=LEFT)                     # timeline checkbox
 generate.pack(pady=(15, 10))                # generate graphs button
 
 messages.pack(side=BOTTOM, padx=30, pady=(15, 30))  # description/info box
