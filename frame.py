@@ -6,6 +6,7 @@ import tkinter as draw
 from tkinter import *
 import tkinter.font as font
 from PIL import Image, ImageTk
+from tkinter.filedialog import askopenfilename
 import os
 import os.path
 import shutil
@@ -13,14 +14,15 @@ import sys
 import random
 import csv
 from main import handleVideo
+from sqTimelineSingle import generateTimelineOne
 import sqVideo
 import sqHeatmap
-import sqTimeline
+from sqTimeline import generateTimeline
 
 # INITIALIZATION------------------------------------------------------------------------------------------INITIALIZATION
 gui = draw.Tk()
 gui.iconphoto(False, draw.PhotoImage(file="assets/ico_acorn.png"))
-gui.geometry("875x600+540+200")
+gui.geometry("875x575+540+200")
 gui.title("A.C.O.R.N.")
 gui.resizable(False, False)
 
@@ -41,39 +43,29 @@ banner = Frame(gui,
                bd=3,
                cursor="spider",
                bg="#4b636e",
-               relief="groove")         # TOP justify; contains welcome info / i
+               relief="groove")  # TOP justify; contains welcome info / i
 
 interface = Frame(gui,
                   bd=3,
                   cursor="trek",
                   bg="#78909c",
-                  relief="groove")      # LEFT justify; contains buttons / interaction
+                  relief="groove")  # LEFT justify; contains buttons / interaction
 
 display = Frame(gui,
                 bd=3,
                 cursor="dotbox",
                 bg="#a7c0cd",
-                relief="groove")        # RIGHT justify; contains images / graphs
+                relief="groove")  # RIGHT justify; contains images / graphs
 
 checkboxes = Frame(interface,
                    bd=1,
                    bg="#a7c0cd",
-                   relief="groove")     # Contains checkboxes hmap / tline
+                   relief="groove")  # Contains checkboxes hmap / tline
 
-messages = LabelFrame(interface,
-                      text="Description",
-                      font=cleanFont,
-                      fg="white",
-                      bd=2,
-                      relief="flat",
-                      bg="#795734")     # Contains information relevant to user
-
-# showFile = LabelFrame(interface,
-#                      text="UPLOAD",
-#                      fg="black",
-#                      bd=2,
-#                      relief="flat")
-# showFile.pack(padx=30, pady=(15, 15))
+messages = Frame(interface,
+                 bd=1,
+                 relief="groove",
+                 bg="#a7c0cd")  # Contains information relevant to user
 
 
 # STARTUP DETAIL-------------------------------------------------------------------------------------------------STARTUP
@@ -116,7 +108,7 @@ useFile = Button(interface,
                  image=btn,
                  highlightthickness=0,
                  compound=CENTER,
-                 text="Import CSV",
+                 text="Select CSV",
                  font=cleanFont,
                  bd=0,
                  relief="flat",
@@ -134,16 +126,17 @@ generate = Button(interface,
                   relief="flat",
                   bg="#78909c",
                   activebackground="#78909c",
+                  state=DISABLED,
                   command=lambda: operation("graph"))
 
-state1 = draw.IntVar()
-state2 = draw.IntVar()
+heatchk = IntVar()
+timechk = IntVar()
 hotmap = Checkbutton(checkboxes,
                      text="Heatmap",
                      font=cleanFont,
-                     bg="#b12f2f",
-                     width=10,
-                     variable=state1,
+                     bg="#a0552c",
+                     width=12,
+                     variable=heatchk,
                      onvalue=1,
                      offvalue=0,
                      command=lambda: operation("hmap"))
@@ -151,9 +144,9 @@ hotmap = Checkbutton(checkboxes,
 history = Checkbutton(checkboxes,
                       text="Timeline",
                       font=cleanFont,
-                      bg="#b12f2f",
-                      width=10,
-                      variable=state2,
+                      bg="#a0552c",
+                      width=12,
+                      variable=timechk,
                       onvalue=1,
                       offvalue=0,
                       command=lambda: operation("tline"))
@@ -170,14 +163,14 @@ filename = Label(interface,
 
 info = "Getting Started: \n\n " \
        "·• Upload a local video file. \n " \
-       "·• Add any additional CSV files" \
+       "·• Add any additional CSV files"
 
 text = Label(messages,
              text=info,
              font=cleanFont,
              anchor=CENTER,
              width=28, height=5,
-             relief="groove",
+             relief="flat",
              bg="#a7c0cd")  # dynamically updated per lambda
 
 
@@ -208,12 +201,21 @@ def detective():  # Searches for CSV files
 
 def view(bucket):
     for i in range(len(bucket)):
-        filename.config(text=filename.cget("text") + "["+ bucket[i] + "], ")
+        filename.config(text=filename.cget("text") + "[" + bucket[i] + "], ")
 
 
 def selection():
-    if (state1.get() == 1) & (state2.get() == 0):
+    if (heatchk.get() == 1) & (timechk.get() == 0):
         print("Heat is selected only")
+        generate.configure(state=NORMAL)
+    elif (heatchk.get() == 0) & (timechk.get() == 1):
+        print("Time is selected only")
+        generate.configure(state=NORMAL)
+    elif (heatchk.get() == 1) & (timechk.get() == 1):
+        print("Heat & Time are selected.")
+        generate.configure(state=NORMAL)
+    else:
+        generate.configure(state=DISABLED)
 
 
 def operation(self):
@@ -230,7 +232,12 @@ def operation(self):
         event = "Please select a .csv file."
         text.configure(text=event)
         package()
+
         print(event)  # debugging
+        csvfile = askopenfilename()
+        print(csvfile)
+        generateTimelineOne(csvfile)
+        artshow()
 
     elif self == 'tline' or self == 'hmap':
         print("A tickbox has been hit")
@@ -242,7 +249,8 @@ def operation(self):
         text.configure(text=event)
         package()
         print(event)  # debugging
-        sqTimeline.generateTimeline()
+        generateTimeline()
+        print("Finished graphing")
         artshow()  # hang that art on the wall
 
     else:  # what did you break
@@ -281,30 +289,29 @@ def patchwork(file):
 ###### FRAME: BANNER ######
 banner.pack(side=TOP, fill="x")
 
-headline.pack(fill='x', pady=15)  # headlining text
+headline.pack(fill='x', pady=15)            # headlining text
 
 ###### FRAME: INTERFACE ######
 interface.pack(side=LEFT, fill='x')
 
-uploadVideo.pack(side=TOP, pady=(20, 10))  # upload video file button
-useFile.pack(side=TOP)  # upload csv file button
-filename.pack(padx=20, pady=10)  # displays csv files
+checkboxes.pack(side=TOP, pady=(20, 10))    # contains checkboxes
+hotmap.pack(side=LEFT)                      # heatmap checkbox
+history.pack(side=LEFT)                     # timeline checkbox
+uploadVideo.pack(side=TOP, pady=(10, 15))   # upload video file button
+useFile.pack(side=TOP, pady=(0, 10))                      # upload csv file button
+filename.pack(padx=20, pady=10)             # displays csv files
 
-
-checkboxes.pack(side=TOP, pady=(20, 10))
-hotmap.pack(side=LEFT)
-history.pack(side=LEFT)
-generate.pack(pady=(0, 24))  # generate graphs button
+generate.pack(pady=(15, 10))                # generate graphs button
 
 messages.pack(side=BOTTOM, padx=30, pady=(15, 30))  # description/info box
-text.pack()  # text inside desc/info box
+text.pack()                                 # text inside desc/info box
 
 ###### FRAME: DISPLAY ######
 display.pack(side=RIGHT, fill=BOTH, expand=YES)
 
-art.pack(fill=BOTH, expand=YES)  # graphical display
+art.pack(fill=BOTH, expand=YES)             # graphical display
 
 # SHOWTIME------------------------------------------------------------------------------------------------------SHOWTIME
 filename.config(text=detective())
-# detective()
+
 main()
