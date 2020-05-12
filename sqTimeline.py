@@ -5,6 +5,7 @@ import glob
 from matplotlib import pyplot
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
+import os
 
 
 # CLASS DEFINITIONS-----------------------------------------------------------------------------------------------------
@@ -17,17 +18,17 @@ def generateTimeline():
     #currdir = os.getcwd()
     #print(currdir)
 
-    #final_directory = os.path.join(currdir, r'new_folder')
-    #if not os.path.exists("saves"):
-    #    os.makedirs("saves")
-    #    print("Created new directory for new scatterplots.")
-    #else:
-    #    print("Directory to save new scatterplots already exists.\n")
+    # final_directory = os.path.join(currdir, r'new_folder')
+    if not os.path.exists("saves"):
+        os.makedirs("saves")
+        print("Created new directory for new scatterplots.")
+    else:
+        print("Directory to save new scatterplots already exists.\n")
 
     print("NOW GENERATING SCATTERPLOTS")
 
     x = filebrowser('.csv')
-
+    print(x)
     for elem in x:
         df = pd.read_csv(elem, delimiter=',', header=1)
         print("NEW CSV FILE DETECTED NAMED:", elem)
@@ -60,7 +61,7 @@ def generateTimeline():
         ax.set_xlabel('TIME(X)')
         ax.plot(z, x, y, color='r', lw=1)  # lw is line width
         #     pyplot.show() # Scatterplot using CSV (MAIN) Dataframe 1
-        fig.savefig('saves/' + newelem + '.png', dpi=1000, bbox_inches='tight')
+        fig.savefig('saves/' + newelem + '.png', dpi=1000, bbox_inches='tight', transparent=True)
         print("SCATTERPLOT", elem, "GENERATED\n")
 
 # find the CSVs in a folder to generate

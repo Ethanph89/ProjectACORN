@@ -1,6 +1,6 @@
 # AUTHOR:
 # Andrew Bhatti
-# GUI Interface
+# GUI Interface & Functionality
 
 import tkinter as draw
 from tkinter import *
@@ -17,14 +17,6 @@ import sqVideo
 import sqHeatmap
 import sqTimeline
 
-# CLASS DEFINITIONS-----------------------------------------------------------------------------------------------------
-
-# todo classes:
-#  loadedCSV
-#  heatmap
-#  timeline
-
-
 # INITIALIZATION------------------------------------------------------------------------------------------INITIALIZATION
 gui = draw.Tk()
 gui.iconphoto(False, draw.PhotoImage(file="assets/ico_acorn.png"))
@@ -40,30 +32,41 @@ btn = Image.open("assets/bg_button_rect_red.png")
 btn = btn.resize((round(278 * 0.55), round(61 * 0.55)), Image.ANTIALIAS)
 btn = ImageTk.PhotoImage(btn)  # resized and formatted graphic
 
-
 holder = Image.open("assets/acorn_main.png")
 holder = holder.resize((300, 300), Image.ANTIALIAS)
 holder = ImageTk.PhotoImage(holder)
 
-# FRAMES - - - Top, Left, Right-----------------------------------------------------------------------------------FRAMES
+# FRAMES----------------------------------------------------------------------------------------------------------FRAMES
 banner = Frame(gui,
                bd=3,
                cursor="spider",
                bg="#4b636e",
-               relief="groove")
+               relief="groove")         # TOP justify; contains welcome info / i
 
 interface = Frame(gui,
                   bd=3,
                   cursor="trek",
                   bg="#78909c",
-                  relief="groove")  # left side - houses buttons / interaction
+                  relief="groove")      # LEFT justify; contains buttons / interaction
 
 display = Frame(gui,
                 bd=3,
                 cursor="dotbox",
                 bg="#a7c0cd",
-                relief="groove")  # right side - houses graphs
+                relief="groove")        # RIGHT justify; contains images / graphs
 
+checkboxes = Frame(interface,
+                   bd=1,
+                   bg="#a7c0cd",
+                   relief="groove")     # Contains checkboxes hmap / tline
+
+messages = LabelFrame(interface,
+                      text="Description",
+                      font=cleanFont,
+                      fg="white",
+                      bd=2,
+                      relief="flat",
+                      bg="#795734")     # Contains information relevant to user
 
 # showFile = LabelFrame(interface,
 #                      text="UPLOAD",
@@ -87,8 +90,9 @@ headline = Label(banner,
 art = Label(display,
             image=holder,
             bd=0,
-            bg="#a7c0cd")
-
+            bg="#a7c0cd",
+            highlightthickness=0,
+            borderwidth=0)
 
 # canvas = draw.Canvas(interface, width=54, height=54, highlightthickness=0, bg="red")
 # canvas.pack()
@@ -124,7 +128,7 @@ generate = Button(interface,
                   image=btn,
                   highlightthickness=0,
                   compound=CENTER,
-                  text="Generate Graphs",
+                  text="Generate Graph",
                   font=cleanFont,
                   bd=0,
                   relief="flat",
@@ -132,37 +136,56 @@ generate = Button(interface,
                   activebackground="#78909c",
                   command=lambda: operation("graph"))
 
+state1 = draw.IntVar()
+state2 = draw.IntVar()
+hotmap = Checkbutton(checkboxes,
+                     text="Heatmap",
+                     font=cleanFont,
+                     bg="#b12f2f",
+                     width=10,
+                     variable=state1,
+                     onvalue=1,
+                     offvalue=0,
+                     command=lambda: operation("hmap"))
+
+history = Checkbutton(checkboxes,
+                      text="Timeline",
+                      font=cleanFont,
+                      bg="#b12f2f",
+                      width=10,
+                      variable=state2,
+                      onvalue=1,
+                      offvalue=0,
+                      command=lambda: operation("tline"))
 
 # INFORMATION DISPLAY----------------------------------------------------------------------------------------INFORMATION
 filename = Label(interface,
-                 text="CSV files detected: \n",
+                 text="CSV file(s) detected:   ",
+                 wraplength=230,
                  font=cleanFont,
-                 width=18, height=4,
+                 width=26, height=4,
                  relief="groove",
+                 bd=1,
                  bg="#a7c0cd")
 
-messages = LabelFrame(interface,
-                      text="Description",
-                      font=cleanFont,
-                      fg="black",
-                      bd=2,
-                      relief="raised",
-                      bg="#78909c")
-
 info = "Getting Started: \n\n " \
-       "1) Upload a local video file. \n " \
-       "2) Add any additional .csv \n " \
-       "3) Begin graph generation."
+       "·• Upload a local video file. \n " \
+       "·• Add any additional CSV files" \
 
 text = Label(messages,
              text=info,
              font=cleanFont,
-             width=28, height=18,
+             anchor=CENTER,
+             width=28, height=5,
              relief="groove",
              bg="#a7c0cd")  # dynamically updated per lambda
 
 
 # FUNCTIONS----------------------------------------------------------------------------------------------------FUNCTIONS
+
+def test(self):
+    print(self)
+
 
 def main():
     gui.mainloop()
@@ -185,7 +208,12 @@ def detective():  # Searches for CSV files
 
 def view(bucket):
     for i in range(len(bucket)):
-        filename.config(text=filename.cget("text") + "\n" + bucket[i])
+        filename.config(text=filename.cget("text") + "["+ bucket[i] + "], ")
+
+
+def selection():
+    if (state1.get() == 1) & (state2.get() == 0):
+        print("Heat is selected only")
 
 
 def operation(self):
@@ -203,6 +231,10 @@ def operation(self):
         text.configure(text=event)
         package()
         print(event)  # debugging
+
+    elif self == 'tline' or self == 'hmap':
+        print("A tickbox has been hit")
+        selection()
 
     elif self == 'graph':  # GENERATE GRAPHS
         event = "A graph is being generated \n with the provided data." \
@@ -228,7 +260,7 @@ def artshow():
             print("Found the image! " + imgfile)  # debugging
             patchwork(imgfile)
             art.update()
-            text.configure(text=":D")
+            text.configure(text="Graph Generated")
             package()
         else:
             print("ERROR: No images exist.")
@@ -243,31 +275,36 @@ def patchwork(file):
     art.image = graph
     art.pack()
 
+
 # ARRANGEMENT------------------------------------------------------------------------------------------------ARRANGEMENT
 ### THE ORDER IN WHICH ITEMS ARE PACKED IS IMPORTANT ###
 ###### FRAME: BANNER ######
 banner.pack(side=TOP, fill="x")
 
-headline.pack(fill='x', pady=15)        # headlining text
+headline.pack(fill='x', pady=15)  # headlining text
 
 ###### FRAME: INTERFACE ######
 interface.pack(side=LEFT, fill='x')
 
-uploadVideo.pack(pady=(28, 10))         # upload video file button
-useFile.pack(pady=10)                   # upload csv file button
-filename.pack(padx=20, pady=10)                  # displays csv files
+uploadVideo.pack(side=TOP, pady=(20, 10))  # upload video file button
+useFile.pack(side=TOP)  # upload csv file button
+filename.pack(padx=20, pady=10)  # displays csv files
 
-generate.pack(pady=15)                  # generate graphs button
 
-messages.pack(padx=30, pady=(15, 30))   # description/info box
-text.pack()                             # text inside desc/info box
+checkboxes.pack(side=TOP, pady=(20, 10))
+hotmap.pack(side=LEFT)
+history.pack(side=LEFT)
+generate.pack(pady=(0, 24))  # generate graphs button
+
+messages.pack(side=BOTTOM, padx=30, pady=(15, 30))  # description/info box
+text.pack()  # text inside desc/info box
 
 ###### FRAME: DISPLAY ######
 display.pack(side=RIGHT, fill=BOTH, expand=YES)
 
-art.pack(fill=BOTH, expand=YES)         # graphical display
+art.pack(fill=BOTH, expand=YES)  # graphical display
 
 # SHOWTIME------------------------------------------------------------------------------------------------------SHOWTIME
 filename.config(text=detective())
-#detective()
+# detective()
 main()

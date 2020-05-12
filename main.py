@@ -1,5 +1,4 @@
 # AUTHORS:
-# Andrew Bhatti Tkinter Interface
 # Ethan Hunt Upload Video functions
 # IMPORTS---------------------------------------------------------------------------------------------------------------
 import json
