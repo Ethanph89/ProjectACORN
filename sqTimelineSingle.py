@@ -79,6 +79,7 @@ def generateTimelineOne(x):
     print(now)
     fig.savefig('saves/' + "time" + now + '.png', dpi=1000, bbox_inches='tight', transparent=True)
     print("SCATTERPLOT", x, "GENERATED\n")
+    ax.cla()
 
 # find the CSVs in a folder to generate
 #def filebrowser(ext=""):

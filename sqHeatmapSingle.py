@@ -10,16 +10,15 @@ import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
 from datetime import datetime
 
+
 # style.use('ggplot')
 
 # CLASS DEFINITIONS-----------------------------------------------------------------------------------------------------
 
 
-
 # BODY FUNCTIONS--------------------------------------------------------------------------------------------------------
 
 def generateHeatmap(csvfile):
-
     # x = "dying.csv"
     print("Directory: " + csvfile)
     if not os.path.exists("saves"):
@@ -27,7 +26,6 @@ def generateHeatmap(csvfile):
         print("Created new directory for new heatmaps.")
     else:
         print("Directory to save new heatmaps already exists.\n")
-
 
     df = pd.read_csv(csvfile, delimiter=',', header=1)
 
@@ -72,3 +70,5 @@ def generateHeatmap(csvfile):
     print(now)
     plt.savefig('saves/' + "heat" + now + '.png', dpi=300, transparent=True)
     print("HEATMAP", csvfile, "GENERATED\n")
+    # Clears the color bar upon a new plt, All axes definitions are reset
+    plt.clf()

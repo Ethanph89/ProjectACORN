@@ -28,6 +28,7 @@ gui.iconphoto(False, draw.PhotoImage(file="assets/ico_acorn.png"))
 gui.geometry("875x575+540+200")
 gui.title("A.C.O.R.N.")
 gui.resizable(False, False)
+ghost = "wandering"
 
 # FONTS------------------------------------------------------------------------------------------------------------FONTS
 cleanFont = font.Font(family='Helvetica', size=12)
@@ -46,7 +47,7 @@ banner = Frame(gui,
                bd=3,
                cursor="spider",
                bg="#4b636e",
-               relief="groove")     # TOP justify; contains welcome info / i
+               relief="groove")  # TOP justify; contains welcome info / i
 
 interface = Frame(gui,
                   bd=3,
@@ -58,17 +59,17 @@ display = Frame(gui,
                 bd=3,
                 cursor="dotbox",
                 bg="#a7c0cd",
-                relief="groove")    # RIGHT justify; contains images / graphs
+                relief="groove")  # RIGHT justify; contains images / graphs
 
 options = Frame(interface,
                 bd=1,
                 bg="#a7c0cd",
-                relief="groove")    # Contains radio buttons Video / CSV
+                relief="groove")  # Contains radio buttons Video / CSV
 
 shell = Frame(interface,
               bd=0,
               bg="#a7c0cd",
-              relief="flat")        # Space to swap between two buttons
+              relief="flat")  # Space to swap between two buttons
 
 checkboxes = Frame(interface,
                    bd=1,
@@ -83,7 +84,7 @@ purpose = Frame(interface,
 messages = Frame(interface,
                  bd=1,
                  relief="groove",
-                 bg="#a7c0cd")      # Contains information relevant to user
+                 bg="#a7c0cd")  # Contains information relevant to user
 
 # STARTUP DETAIL-------------------------------------------------------------------------------------------------STARTUP
 greeting = "Welcome to Project A.C.O.R.N. \n\n" \
@@ -180,6 +181,7 @@ hotmap = Checkbutton(checkboxes,
                      variable=heatchk,
                      onvalue=1,
                      offvalue=0,
+                     state=DISABLED,
                      command=lambda: operation("hmap"))
 
 history = Checkbutton(checkboxes,
@@ -190,10 +192,11 @@ history = Checkbutton(checkboxes,
                       variable=timechk,
                       onvalue=1,
                       offvalue=0,
+                      state=DISABLED,
                       command=lambda: operation("tline"))
 
-#all = IntVar()
-#marathon = Checkbutton(purpose,
+# all = IntVar()
+# marathon = Checkbutton(purpose,
 #                       text="ALL",
 #                       font=cleanFont,
 #                       bg="#a92d2d",
@@ -206,7 +209,7 @@ history = Checkbutton(checkboxes,
 # INFORMATION DISPLAY----------------------------------------------------------------------------------------INFORMATION
 
 filename = Label(interface,
-                 text="Loaded: ",
+                 text="No CSV file present.",
                  wraplength=230,
                  font=cleanFont,
                  width=26, height=1,
@@ -231,7 +234,7 @@ text = Label(messages,
 
 def choice():
     print(a.get())
-    if a.get() == 1:      # enable Video btn
+    if a.get() == 1:  # enable Video btn
         useFile.pack_forget()
         uploadVideo.pack()
     else:
@@ -243,38 +246,53 @@ def main():
     gui.mainloop()
 
 
-def detective():  # Searches for CSV files
-    bucket = []
-    for datafile in os.listdir():
-        if datafile.endswith(".csv"):
-            print(datafile)
-            bucket.append(datafile)
-            # filename.config(text=datafile)
-            continue
-    if not bucket:
-        return "No CSV files detected."
-    else:
-        # bucket = (*bucket, sep= "\n")
-        return view(bucket)
+def detective():  # Search current directory for newest CSV file
+    try:
+        csvfile = max(glob.iglob('*.csv'), key=os.path.getctime)  # get recent CSV file
+        unlock()
+        print("Most recent CSV: " + csvfile)
+        filename.config(text="Loaded: " + csvfile)
+    except (ValueError, TypeError):
+        print("No CSV files present in cwd.")
+    print(ghost)    # debugging
+
+# def detective():  # Searches for CSV files
+#    bucket = []
+#    for datafile in os.listdir():
+#        if datafile.endswith(".csv"):
+#            print(datafile)
+#            bucket.append(datafile)
+#            # filename.config(text=datafile)
+#            continue
+#    if not bucket:
+#        return "No CSV files detected."
+#    else:
+#        # bucket = (*bucket, sep= "\n")
+#        return view(bucket)
 
 
-def view(bucket):
-    for i in range(len(bucket)):
-        filename.config(text=filename.cget("text") + bucket[i])
+# def view(bucket):
+#    for i in range(len(bucket)):
+#        filename.config(text=filename.cget("text") + bucket[i])
 
 
 def selection():
-    if (heatchk.get() == 1) & (timechk.get() == 0):
+    if (heatchk.get() == 1) & (timechk.get() == 0) & (ghost != "wandering"):
         print("Heat is selected only")
         generate.configure(state=NORMAL)
-    elif (heatchk.get() == 0) & (timechk.get() == 1):
+    elif (heatchk.get() == 0) & (timechk.get() == 1) & (ghost != "wandering"):
         print("Time is selected only")
         generate.configure(state=NORMAL)
-    elif (heatchk.get() == 1) & (timechk.get() == 1):
+    elif (heatchk.get() == 1) & (timechk.get() == 1) & (ghost != "wandering"):
         print("Heat & Time are selected.")
         generate.configure(state=NORMAL)
     else:
         generate.configure(state=DISABLED)
+
+
+def unlock():
+    hotmap.config(state=NORMAL)
+    history.config(state=NORMAL)
 
 
 def operation(self):
@@ -286,7 +304,10 @@ def operation(self):
         text.configure(text=event)
         package()
         print(event)  # debugging
-        handleVideo()
+        # handleVideo()
+        detective()
+        if ghost != "wandering":
+            unlock()
 
     elif self == 'use':  # USE FILE OPTION
         event = "Please select a CSV file."
@@ -294,10 +315,12 @@ def operation(self):
         package()
 
         print(event)  # debugging
-        csvfile = askopenfilename()
-        print(csvfile)
-        csvfilename = ntpath.basename(csvfile)
+        locator()
+        # csvfile = askopenfilename()
+        # print(csvfile)
+        csvfilename = ntpath.basename(ghost)
         filename.config(text="Loaded: " + csvfilename)
+        unlock()
 
     elif self == 'tline' or self == 'hmap':
         print("A tickbox has been hit")
@@ -311,15 +334,29 @@ def operation(self):
         package()
         print(event)  # debugging
 
-        if timechk.get() == 1 and csvfile != "":
-            generateTimelineOne(csvfile)
-            print("Finished graphing")
+        if timechk.get() == 1 and heatchk.get() == 0:
+            generateTimelineOne(ghost)
             artshow()  # hang that art on the wall
+        elif heatchk.get() == 1 and timechk.get() == 0:
+            generateHeatmap(ghost)
+            artshow()
+        elif timechk.get() == 1 and heatchk.get() == 1:
+            generateHeatmap(ghost)
+            generateTimelineOne(ghost)
+            artshow()
+            print("Two graph image are being generated.")
         else:
-            print("Multiple csv files are being handled.")
+            print("This should not be possible.")
 
     else:  # what did you break
         print("Uncaught error has occurred.")
+
+
+def locator():
+    global ghost
+    ghost = askopenfilename()
+    print("Ghost now knows: " + ghost)
+    return ghost
 
 
 def package():
@@ -328,16 +365,16 @@ def package():
 
 
 def artshow():
-    #newest = max([i for i in os.listdir("saves") if i.endswith(".png")], key=os.path.getctime)
-    #print(newest)
+    # newest = max([i for i in os.listdir("saves") if i.endswith(".png")], key=os.path.getctime)
+    # print(newest)
     imgfile = max(glob.iglob('saves/*.png'), key=os.path.getctime)  # get recent PNG file
     print("Found the image! " + imgfile)  # debugging
     patchwork(imgfile)
     art.update()
-    text.configure(text="Graph Generated")
+    text.configure(text="Graph Generated  >")
     package()
 
-    #for imgfile in os.listdir("saves"):
+    # for imgfile in os.listdir("saves"):
     #    if imgfile.endswith(".png"):
     #        print("Found the image! " + imgfile)  # debugging
     #        patchwork(imgfile)
@@ -372,8 +409,7 @@ options.pack(side=TOP, pady=(20, 10))
 left.pack(side=LEFT)
 right.pack(side=RIGHT)
 shell.pack(side=TOP, pady=(10, 15))
-#uploadVideo.pack(side=TOP, pady=(10, 15))  # upload video file button
-#useFile.pack(side=TOP, pady=(0, 10))  # upload csv file button
+
 filename.pack(padx=20, pady=10)  # displays csv files
 
 checkboxes.pack(side=TOP, pady=(20, 10))  # contains checkboxes
@@ -382,7 +418,7 @@ history.pack(side=LEFT)  # timeline checkbox
 
 purpose.pack(pady=(15, 20))
 generate.pack(side=LEFT)  # generate graphs button
-#marathon.pack(side=LEFT)
+# marathon.pack(side=LEFT)
 
 messages.pack(side=BOTTOM, padx=30, pady=(30, 30))  # description/info box
 text.pack()  # text inside desc/info box
@@ -394,5 +430,7 @@ art.pack(fill=BOTH, expand=YES)  # graphical display
 
 # SHOWTIME------------------------------------------------------------------------------------------------------SHOWTIME
 filename.config(text=detective())
+print("Ghost is " + ghost)
+detective()
 choice()
 main()
