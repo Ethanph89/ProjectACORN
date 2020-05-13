@@ -74,7 +74,7 @@ def generateTimelineOne(x):
 
     now = now.replace(' ', '')
     now = now.replace(':', '')
-    now = now.replace('.', '')  # Fully remove shit
+    now = now.replace('.', '')  # Fully strip unwanted characters
     now = now.replace('-', '')
     print(now)
     fig.savefig('saves/' + "time" + now + '.png', dpi=1000, bbox_inches='tight', transparent=True)
