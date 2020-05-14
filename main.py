@@ -313,7 +313,7 @@ def operation(self):
 
 def locator():
     global ghost
-    ghost = askopenfilename()
+    ghost = askopenfilename(filetypes=[("CSV file", "*.csv")])
     print("Ghost now knows: " + ghost)
     return ghost
 
