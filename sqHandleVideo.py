@@ -43,4 +43,4 @@ def handleVideo():
         if image.featuresJSON != 0:
 
             # save data to CSV
-            sqVideo.saveData(folderpath, image)
+            sqVideo.saveData(video, image)

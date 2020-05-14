@@ -155,7 +155,7 @@ def parseAWSOutput(self):
 
     return x, y, time
 
-def saveData(folder, image):
-    d = open("data" + str(image.name) + ".csv", "a")
+def saveData(video, image):
+    d = open("data" + str(video.name) + ".csv", "a")
     d.write(str(image.fullpath[-14:]) + ',' + str(image.xCoord) + ',' + str(image.yCoord) + ',' + str(image.timestamp) + '\n')
     d.close()
