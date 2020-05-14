@@ -81,8 +81,8 @@ messages = Frame(interface,
 
 # STARTUP DETAIL-------------------------------------------------------------------------------------------------STARTUP
 greeting = "Welcome to Project A.C.O.R.N. \n\n" \
-           "This application uses video files to create graphics for visual\n" \
-           "representation. This tool serves as a time-efficient, objective visualization of data."
+           "An open-source software used to quantify animal behavior. It uses a 2D coordinate system\n" \
+           "and time to provide heat plots based on location frequency and scatter plots based on location at each time."
 
 headline = Label(banner,
                  text=greeting,
