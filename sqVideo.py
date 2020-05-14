@@ -45,7 +45,13 @@ def selectVideo():
     Tk().withdraw()
     filename = askopenfilename()
 
-    return filename
+    # validate file selected
+    if str(filename) == "":
+        return ""
+    elif str(filename[-3:]) != "mp4":
+        return "nofile"
+    else:
+        return filename
 
 
 # parses the video into individual frames as images
@@ -150,6 +156,6 @@ def parseAWSOutput(self):
     return x, y, time
 
 def saveData(folder, image):
-    d = open("data.csv", "a")
+    d = open("data" + str(image.name) + ".csv", "a")
     d.write(str(image.fullpath[-14:]) + ',' + str(image.xCoord) + ',' + str(image.yCoord) + ',' + str(image.timestamp) + '\n')
     d.close()
