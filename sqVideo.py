@@ -43,7 +43,7 @@ class myImage(object):
 # select video file from directory
 def selectVideo():
     Tk().withdraw()
-    filename = askopenfilename()
+    filename = askopenfilename(filetypes=[("mp4 file", "*.mp4")])
 
     # validate file selected
     if str(filename) == "":
