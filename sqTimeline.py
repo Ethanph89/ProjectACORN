@@ -1,69 +1,70 @@
-# AUTHOR:
-# Giancarlo Garcia Deleon
+# AUTHORS:
+# Giancarlo Garcia Deleon, Andrew Bhatti, Ethan Hunt
 # IMPORTS---------------------------------------------------------------------------------------------------------------
 import glob
 from matplotlib import pyplot
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
+import os
+from datetime import datetime
 
 
 # CLASS DEFINITIONS-----------------------------------------------------------------------------------------------------
+class myTimeline(object):
 
+    def __init__(self):
+        self.fig = self.genFig()
+        self.ax = self.toAx()
+        self.x1 = []
+        self.y = []
+        self.z = []
 
+    def genFig(self):
+        return pyplot.figure()
+
+    def toAx(self):
+        return Axes3D(self.fig)
 
 # BODY FUNCTIONS--------------------------------------------------------------------------------------------------------
-def generateTimeline():
-    #os.chdir("Desktop/Python Scripts/") #Note: this directory will be changed at the very end to endure that it is in the programs local directory.
-    #currdir = os.getcwd()
-    #print(currdir)
 
-    #final_directory = os.path.join(currdir, r'new_folder')
-    #if not os.path.exists("saves"):
-    #    os.makedirs("saves")
-    #    print("Created new directory for new scatterplots.")
-    #else:
-    #    print("Directory to save new scatterplots already exists.\n")
+def generateTimelineOne(x):
+    print("Directory: " + x)
+
+    # final_directory = os.path.join(currdir, r'new_folder')
+    if not os.path.exists("saves"):
+        os.makedirs("saves")
+        print("Created new directory for new scatterplots.")
+    else:
+        print("Directory to save new scatterplots already exists.\n")
 
     print("NOW GENERATING SCATTERPLOTS")
 
-    x = filebrowser('.csv')
+    df = pd.read_csv(x, delimiter=',', header=1)
 
-    for elem in x:
-        df = pd.read_csv(elem, delimiter=',', header=1)
-        print("NEW CSV FILE DETECTED NAMED:", elem)
+    timeline = myTimeline()
 
-        ## all files are saved as a list.
-        # Now we want to run everything in our list through our script
-        # Have a nested for loop
+    print("NOW GENERATING SCATTERPLOT", x)
 
-        # sec_column = df.iloc[:, 1]
-        # print(sec_column)
+    # append data to timeline arrays
+    for i, row in df.iterrows():
+        timeline.x1.append(float(row.values[1]))  # x should be time. so we name it Z, in place of x
+        timeline.y.append(float(row.values[2]))  # note that '2' is the column in which the iteration occurs
+        timeline.z.append(float(row.values[3]))
 
-        fig = pyplot.figure()
-        ax = Axes3D(fig)
-        x = []
-        y = []
-        z = []
+    timeline.ax.scatter(timeline.z, timeline.x1, timeline.y, '-o')
 
-        newelem = elem[:-4]
+    # set axis labels
+    timeline.ax.set_zlabel('Z Coordinates')
+    timeline.ax.set_ylabel('Y Coordinates')
+    timeline.ax.set_xlabel('TIME(X)')
+    timeline.ax.plot(timeline.z, timeline.x1, timeline.y, color='r', lw=1)  # lw is line width
 
-        print("NOW GENERATING SCATTERPLOT", elem)
-        for i, row in df.iterrows():
-            x.append(float(row.values[1]))  # x should be time. so we name it Z, in place of x
-            y.append(float(row.values[2]))  # note that '2' is the column in which the iteration occurs
-            z.append(float(row.values[3]))
+    # Use complete datetime as a unique filename
+    now = str(datetime.now()).replace(' ', '').replace(':', '').replace('.', '').replace('-', '')
 
-        ax.scatter(z, x, y, '-o')
+    print(now)
+    timeline.fig.savefig('saves/' + "time" + now + '.png', dpi=1000, bbox_inches='tight', transparent=True)
+    print("SCATTERPLOT", x, "GENERATED\n")
+    timeline.ax.cla()
 
-        ax.set_zlabel('Z Coordinates')
-        ax.set_ylabel('Y Coordinates')
-        ax.set_xlabel('TIME(X)')
-        ax.plot(z, x, y, color='r', lw=1)  # lw is line width
-        #     pyplot.show() # Scatterplot using CSV (MAIN) Dataframe 1
-        fig.savefig('saves/' + newelem + '.png', dpi=1000, bbox_inches='tight')
-        print("SCATTERPLOT", elem, "GENERATED\n")
-
-# find the CSVs in a folder to generate
-def filebrowser(ext=""):
-    # Returns files with an extension
-    return [f for f in glob.glob(f"*{ext}")]
+    return
