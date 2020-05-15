@@ -25,6 +25,14 @@ class myTimeline(object):
     def toAx(self):
         return Axes3D(self.fig)
 
+
+class myTimelineUnit(object):
+
+    def __init__(self):
+        self.x1 = []
+        self.y = []
+        self.z = []
+
 # BODY FUNCTIONS--------------------------------------------------------------------------------------------------------
 
 def generateTimelineOne(x):
@@ -68,3 +76,16 @@ def generateTimelineOne(x):
     timeline.ax.cla()
 
     return
+
+def generateTimelineUnit(x):
+    df = pd.read_csv(x, delimiter=',', header=1)
+
+    timeline = myTimelineUnit()
+
+    # append data to timeline arrays
+    for i, row in df.iterrows():
+        timeline.x1.append(float(row.values[1]))  # x should be time. so we name it Z, in place of x
+        timeline.y.append(float(row.values[2]))  # note that '2' is the column in which the iteration occurs
+        timeline.z.append(float(row.values[3]))
+
+    return timeline.x1
