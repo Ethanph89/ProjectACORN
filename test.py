@@ -12,14 +12,22 @@ class MyTestCase(unittest.TestCase):
         print("Cancel video select")
         self.assertEqual(sqVideo.selectVideo(), "")
 
-    def test_selectVideo_notMP4(self):
-        print("Select a non .mp4")
-        self.assertEqual(sqVideo.selectVideo(), "nofile")
-
     def test_parseVideo(self):
         print("Select a correct video")
         v = sqVideo.myVideo(sqVideo.selectVideo())
         self.assertIsNotNone(sqVideo.parseVideo(v))
+
+    # sqHeatmap.py tests
+    def test_generateHeatmapUnit(self):
+        x = "testdata.csv"
+        h = sqHeatmap.generateHeatmapUnit(x)
+        self.assertIsNotNone(h)
+
+    # sqTimeline.py tests
+    def test_generateTimelineUnit(self):
+        x = "testdata.csv"
+        t = sqTimeline.generateTimelineUnit(x)
+        self.assertIsNotNone(t)
 
 
 if __name__ == '__main__':

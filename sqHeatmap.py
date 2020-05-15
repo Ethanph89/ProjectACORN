@@ -61,3 +61,15 @@ def generateHeatmap(csvfile):
     plt.clf()
 
     return
+
+def generateHeatmapUnit(csvfile):
+
+    df = pd.read_csv(csvfile, delimiter=',', header=1)
+
+    heatmap = myHeatmap()
+
+    for i, row in df.iterrows():
+        heatmap.x1.append(float(row.values[1]))  # x should be time. so we name it Z, in place of x
+        heatmap.y.append(float(row.values[2]))  # note that '2' is the column in which the iteration occurs
+
+    return heatmap.x1
