@@ -1,4 +1,6 @@
 # Project A.C.O.R.N
+https://github.com/Ethanph89/ProjectACORN
+
 Project ACORN (Analyzing Complex Organic Rhythm in Nature)
 
 It's a catchy name so we ran away with it. 
